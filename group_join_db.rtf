@@ -1,0 +1,65 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2821
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 SELECT COUNT(*) AS `numero_iscritti`, YEAR(`enrolment_date`) AS `anno`\
+FROM students\
+GROUP BY anno;\
+\
+SELECT COUNT(*) AS `numero_insegnanti`, `office_address`\
+FROM teachers\
+GROUP BY office_address;\
+\
+SELECT AVG(`vote`), `exam_id`\
+FROM `exam_student`\
+GROUP BY `exam_id`;\
+\
+SELECT count(*) AS `numero_corsi_laurea`, `department_id`\
+FROM `degrees`\
+GROUP BY `department_id`;\
+\
+/*---------------------------*/\
+\
+SELECT *\
+FROM students\
+JOIN degrees ON students.degree_id = degrees.id\
+WHERE degrees.name = 'Corso di Laurea in Economia';\
+\
+SELECT *\
+FROM degrees\
+JOIN departments ON degrees.department_id = departments.id\
+WHERE degrees.level = 'magistrale'\
+AND departments.name = 'Dipartimento di Neuroscienze';\
+\
+SELECT *\
+FROM courses\
+JOIN course_teacher ON courses.id = course_teacher.course_id\
+JOIN teachers ON course_teacher.teacher_id = teachers.id\
+WHERE teachers.name = 'Fulvio' AND surname = 'Amato';\
+\
+SELECT students.*, departments.*\
+FROM students\
+JOIN degrees ON students.degree_id = degrees.id\
+JOIN departments ON degrees.department_id = departments.id\
+ORDER BY students.surname, students.name;\
+\
+SELECT *\
+FROM degrees\
+JOIN courses ON degrees.id = courses.degree_id\
+JOIN course_teacher ON courses.id = course_teacher.course_id\
+JOIN teachers ON teachers.id = course_teacher.teacher_id;\
+\
+SELECT *\
+FROM teachers\
+JOIN course_teacher ON teachers.id = course_teacher.teacher_id\
+JOIN courses ON courses.id = course_teacher.course_id\
+JOIN degrees ON courses.degree_id = degrees.id\
+JOIN departments ON degrees.department_id = departments.id\
+WHERE departments.name = 'Dipartimento di Matematica';\
+\
+\
+\
+}
